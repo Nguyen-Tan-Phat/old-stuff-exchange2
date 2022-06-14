@@ -1,12 +1,17 @@
 
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import reduxThunk from 'redux-thunk';
+import { quanLyBuildingReducer } from './reducers/quanLyBuildingReducer';
+import { quanLyPostReducer } from './reducers/quanLyPostReducer';
+import { quanLyUserReducer } from './reducers/quanLyUserReducer';
 
 
 
 
 const rootReducer = combineReducers({
-
+    quanLyBuildingReducer,
+    quanLyUserReducer,
+    quanLyPostReducer,
 });
 
 let middleWare = applyMiddleware(reduxThunk);
