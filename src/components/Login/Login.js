@@ -19,12 +19,13 @@ export default function Login (props) {
                 console.log(value);
             })
 
-            //  alert(result.user.accessToken);
+            console.log(result.user.accessToken);
             localStorage.setItem('a', result.user.displayName);
+            localStorage.setItem('userlogin', result.user.email);
             // console.log(result.user.displayName);
             // <Redirect to="/admin/dashboard" />
 
-            props.history.push("/adminbuilding");
+            props.history.push("/home");
 
         }).catch((error) => {
             console.log(error);

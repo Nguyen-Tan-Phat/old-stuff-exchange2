@@ -1,6 +1,9 @@
 {
   "name": "old-stuff-exchange",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "engines": {
+    "node": "6.11.1"
+  },
   "private": true,
   "dependencies": {
     "@firebase/auth": "^0.20.2",

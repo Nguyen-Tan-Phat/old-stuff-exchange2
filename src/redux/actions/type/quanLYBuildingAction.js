@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import axios from "axios";
 
 export const layDanhSachBudingAction = () => {
@@ -18,7 +19,6 @@ export const layDanhSachBudingAction = () => {
     }
 }
 
-
 export const deleteBuildingAction = (id) => {
     return async (dispatch) => {
         try {
@@ -32,6 +32,23 @@ export const deleteBuildingAction = (id) => {
 
         } catch (error) {
             console.log(error.data);
+        }
+    }
+}
+
+
+export const editBuildingAction = (a) => {
+    return async (dispatch) => {
+        try {
+            let result = await axios({
+                url: 'https://old-stuff-exchange.azurewebsites.net/api/buildings',
+                method: 'PUT',
+                data: a
+            });
+            const action = layDanhSachBudingAction();
+            dispatch(action);
+        } catch (error) {
+
         }
     }
 }

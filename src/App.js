@@ -14,6 +14,7 @@ import { AdminTemplate } from './templates/AdminTemplate';
 import Profile from './components/Home/Profile';
 import Cart from './components/Cart/Cart';
 import { UserTemplate } from './templates/UserTemplate';
+import EditBuilding from './components/Admin/EditBuilding';
 
 
 function App () {
@@ -26,6 +27,7 @@ function App () {
         <AdminTemplate exact path="/adminuser" Component={AdminUser} />
         <AdminTemplate exact path="/creatbuilding" Component={CreatBuilding} />
         <AdminTemplate exact path="/adminpost" Component={AdminPost} />
+        <AdminTemplate exact path="/editbuilding" Component={EditBuilding} />
         <UserTemplate exact path="/profile" Component={Profile} />
         <UserTemplate exact path="/cart" Component={Cart} />
         <Route exact path="/" component={Login} />
