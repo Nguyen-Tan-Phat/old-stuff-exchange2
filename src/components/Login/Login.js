@@ -10,7 +10,7 @@ export default function Login (props) {
             // console.log(result);
             // console.log(result.user.accessToken);
             axios({
-                url: 'https://old-stuff-exchange.azurewebsites.net/api/users/login',
+                url: 'https://old-stuff-exchange.azurewebsites.net/api/v1.0/authorizes/firebase',
                 method: 'POST',
                 data: {
                     token: result.user.accessToken,
