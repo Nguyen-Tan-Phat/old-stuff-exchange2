@@ -5,7 +5,7 @@ export const layDanhSachBudingAction = () => {
     return async (dispatch) => {
         try {
             let result = await axios({
-                url: 'https://old-stuff-exchange.azurewebsites.net/api/buildings/list?page=1&pageSize=100',
+                url: 'https://old-stuff-exchange.azurewebsites.net/api/v1.0/buildings?page=1&pageSize=100',
                 method: 'GET',
             })
             const action = {
@@ -23,9 +23,8 @@ export const deleteBuildingAction = (id) => {
     return async (dispatch) => {
         try {
             let result = await axios({
-                url: 'https://old-stuff-exchange.azurewebsites.net/api/buildings/' + id,
+                url: 'https://old-stuff-exchange.azurewebsites.net/api/v1.0/buildings/' + id,
                 method: 'DELETE',
-
             })
             const action = layDanhSachBudingAction();
             dispatch(action);
@@ -41,9 +40,8 @@ export const editBuildingAction = (a) => {
     return async (dispatch) => {
         try {
             let result = await axios({
-                url: 'https://old-stuff-exchange.azurewebsites.net/api/buildings',
-                method: 'PUT',
-                data: a
+                url: 'https://old-stuff-exchange.azurewebsites.net/api/v1.0/buildings',
+                method: 'PUT', 
             });
             const action = layDanhSachBudingAction();
             dispatch(action);

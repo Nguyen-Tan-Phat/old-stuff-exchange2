@@ -4,7 +4,7 @@ export const quanLyUserAction = () => {
     return async (dispatch) => {
         try {
             let result = await axios({
-                url: 'https://old-stuff-exchange.azurewebsites.net/api/users/list?pageNumber=1&pageSize=40',
+                url: 'https://old-stuff-exchange.azurewebsites.net/api/v1.0/apartments',
                 method: 'GET',
             })
             const action = {

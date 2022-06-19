@@ -20,6 +20,7 @@ export default function Login (props) {
             })
 
             console.log(result.user.accessToken);
+            localStorage.setItem('token', result.user.accessToken);
             localStorage.setItem('a', result.user.displayName);
             localStorage.setItem('userlogin', result.user.email);
             // console.log(result.user.displayName);
@@ -30,9 +31,8 @@ export default function Login (props) {
         }).catch((error) => {
             console.log(error);
         })
-
-
     }
+
 
     return (
 
