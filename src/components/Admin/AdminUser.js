@@ -1,15 +1,84 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteUserAction, quanLyUserAction } from '../../redux/actions/type/quanLyUserAction';
+import { deleteUserAction, editUserAction, quanLyUserAction } from '../../redux/actions/type/quanLyUserAction';
 
 export default function AdminUser () {
     const arrUser = useSelector(rootReducer => rootReducer.quanLyUserReducer.arrUser);
+    const editUser = useSelector(rootReducer => rootReducer.editUserReducer);
     const dispatch = useDispatch();
+    const [task, setTask] = useState({  id: '', name: '', email: '', image: '', buildingId: '', status: '' ,roleId: '' ,phone: '',gender:''  });
+    const handleChangeInput = (e) => {
+        let { name, value } = e.target;
+        setTask({
+            ...task,
+            [name]: value,
+        })
+    }
 
     useEffect(() => {
         const action = dispatch(quanLyUserAction);
         dispatch(action);
     })
+
+    const inputUserId = useRef(null);
+    const inputUserName = useRef(null);
+    const inputUserGender = useRef(null);
+    const inputUserEmail = useRef(null);
+    const inputUserImage = useRef(null);
+    const inputUserBuildingId = useRef(null);
+    const inputUserStatus = useRef(null);
+    const inputUserRoleId = useRef(null);
+    const inputUserPhone = useRef(null);
+
+    const handleSubmit =(e) =>{
+        e.preventDefault();
+        let userID= inputUserId.current.value;
+        let userName= inputUserName.current.value;
+        let userEmail= inputUserEmail.current.value;
+        let userImage= inputUserImage.current.value;
+        let userBuildingId= inputUserBuildingId.current.value;
+        let userStatus= inputUserStatus.current.value;
+        let userRole= inputUserRoleId.current.value;
+        let userPhone= inputUserPhone.current.value;
+        let userGender= inputUserPhone.current.value;
+        task.id=userID;
+        task.buildingId=userBuildingId;
+        task.roleId=userRole;
+        if (userName === '') {
+            task.name = inputUserName.current.placeholder;
+        } else {
+            task.name = userName;
+        }
+        if (userEmail === '') {
+            task.email = inputUserEmail.current.placeholder;
+        } else {
+            task.email = userEmail;
+        }
+        if (userImage === '') {
+            task.image = inputUserImage.current.placeholder;
+        } else {
+            task.image = userImage;
+        }
+        if (userStatus === '') {
+            task.status = inputUserStatus.current.placeholder;
+        } else {
+            task.status = userStatus;
+        }
+        if (userPhone === '') {
+            task.phone = inputUserPhone.current.placeholder;
+        } else {
+            task.phone = userPhone;
+        }
+        if (userGender === '') {
+            task.gender = inputUserGender.current.placeholder;
+        } else {
+            task.gender = userGender;
+        }
+        console.log(task);
+        const action = editUserAction(task);
+        dispatch(action)
+    }
+
     return (
         <div>
             <div className="theme-layout">
@@ -48,32 +117,39 @@ export default function AdminUser () {
                                                 <thead>
                                                     <tr>
                                                         <th>Number</th>
-                                                        <th>ID#</th>
                                                         <th>User Name</th>
                                                         <th>Full Name</th>
                                                         <th>Phone</th>
                                                         <th>Email</th>
                                                         <th>Building</th>
                                                         <th>Action</th>
+                                                        <th>Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {arrUser.filter(sp => sp.roleName === 'RESIDENT').map((task, index) => {
                                                         return <tr key={index}>
                                                             <td>{index++}</td>
-                                                            <td>{task.id}</td>
                                                             <td>{task.userName}</td>
                                                             <td>{task.fullName}</td>
                                                             <td>{task.phone}</td>
                                                             <td>{task.email}</td>
                                                             <td>{task.buildingName}</td>
+                                                            <td>{task.status}</td>
                                                             <td>
                                                                 <button className="button soft-danger"><i className="icofont-trash" onClick={() => {
                                                                     const action = deleteUserAction(task.id);
                                                                     dispatch(action);
-                                                                    console.log(action);
+                                                                    alert('Delete User Thành Công');
                                                                 }}></i></button>
-                                                                <div className="button soft-primary"><i className="icofont-pen-alt-1"></i></div>
+                                                                {/* <div className="button soft-primary"><i className="icofont-pen-alt-1"></i></div> */}
+                                                                <button className='btn  btn-outline-success' data-toggle="modal" data-target="#modelId"><i className="icofont-pen-alt-1" onClick={() => {
+                                                                    const action = {
+                                                                        type: 'XEM_CHI_TIET_USER',
+                                                                        sanPhamClick: task,
+                                                                    }
+                                                                    dispatch(action);
+                                                                }}></i></button>
                                                             </td>
                                                         </tr>
                                                     })}
@@ -91,6 +167,7 @@ export default function AdminUser () {
                 </div>
 
             </div>
+            
         </div>
     )
 

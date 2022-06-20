@@ -1,16 +1,45 @@
-import React from 'react'
+import React, { useState, } from 'react'
 import { signInWithPopup } from 'firebase/auth'
 import { auth, provider } from '../../firebase';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { loginAction } from '../../redux/actions/type/LoginAction';
+import { useDispatch } from 'react-redux';
 export default function Login (props) {
+    const dispatch = useDispatch();
+    const [login, setLogin] = useState({ userName: '', password: '' });
+
+    const handleChangeInput = (e) => {
+        let { value, name } = e.target;
+        setLogin({
+            ...login,
+            [name]: value
+        })
+    }
+    console.log(login);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (login.userName === '' || login.password === '') {
+            alert('Không bỏ trống tài khoản mật khẩu');
+        }
+        else {
+            const action = loginAction(login);
+            dispatch(action);
+            if (localStorage.getItem('loginadmin') !== '' || login.userName.length > 3) {
+                props.history.push('/adminbuilding')
+                
+            }
+
+        }
+    }
 
     const signInWithGoogle = () => {
         signInWithPopup(auth, provider).then((result) => {
             // console.log(result);
             // console.log(result.user.accessToken);
             axios({
-                url: 'https://old-stuff-exchange.azurewebsites.net/api/v1.0/authorizes/firebase',
+                url: 'https://old-stuff-exchange.azurewebsites.net/api/users/login',
                 method: 'POST',
                 data: {
                     token: result.user.accessToken,
@@ -19,8 +48,7 @@ export default function Login (props) {
                 console.log(value);
             })
 
-            console.log(result.user.accessToken);
-            localStorage.setItem('token', result.user.accessToken);
+            // console.log(result.user.accessToken);
             localStorage.setItem('a', result.user.displayName);
             localStorage.setItem('userlogin', result.user.email);
             // console.log(result.user.displayName);
@@ -30,9 +58,10 @@ export default function Login (props) {
 
         }).catch((error) => {
             console.log(error);
-        })
-    }
+        });
 
+
+    };
 
     return (
 
@@ -74,13 +103,15 @@ export default function Login (props) {
                             <h4>
                                 <i className="icofont-key-hole" /> Đăng nhập
                             </h4>
-                            <form className="c-form">
+                            <form className="c-form" onSubmit={handleSubmit}>
                                 <input
-                                    name="email"
+                                    onChange={handleChangeInput}
+                                    name="userName"
                                     type="text"
                                     placeholder="Email"
                                 />
                                 <input
+                                    onChange={handleChangeInput}
                                     name="password"
                                     type="password"
                                     placeholder="Mật khẩu"
@@ -113,18 +144,18 @@ export default function Login (props) {
                                         style={{
                                             marginLeft: 8,
                                         }}
-                                        className="main-btn"
+                                        className="main-btn" type='submit'
                                     >
                                         <i className="icofont-key" /> Đăng nhập
                                     </button>
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div>   
 
                 </div>
             </div>
         </div >
-    )
+    );
 
-}
+};

@@ -102,7 +102,6 @@ export default function AdminBuilDing (props) {
                                                 <thead>
                                                     <tr>
                                                         <th>Number</th>
-                                                        <th>ID</th>
                                                         <th>Name</th>
                                                         <th>Number Floor</th>
                                                         <th>Number Room</th>
@@ -115,7 +114,6 @@ export default function AdminBuilDing (props) {
                                                     {arrBuilding.map((task, index) => {
                                                         return <tr key={index}>
                                                             <td>{index++}</td>
-                                                            <td>{task.id}</td>
                                                             <td>{task.name}</td>
                                                             <td>{task.numberFloor}</td>
                                                             <td>{task.numberRoom}</td>
@@ -126,7 +124,6 @@ export default function AdminBuilDing (props) {
                                                                     const action = deleteBuildingAction(task.id);
                                                                     dispatch(action);
                                                                     alert('Delete Building Thành Công');
-                                                                    console.log(task.id);
                                                                 }}></i></button>
 
                                                                 <button className='btn  btn-outline-success' data-toggle="modal" data-target="#modelId"><i className="icofont-pen-alt-1" onClick={() => {

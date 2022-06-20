@@ -249,7 +249,7 @@ export const AdminTemplate = (props) => {
                                 <li className="logout">
                                     <Link to='/login' >
                                         <i className="icofont-power" /> Logout
-                                        {localStorage.setItem('login', '')}
+                                        {localStorage.clear}
                                     </Link>
                                 </li>
                             </ul>
